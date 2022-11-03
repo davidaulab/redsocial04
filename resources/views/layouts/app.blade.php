@@ -45,7 +45,7 @@
      <!-- el contenido de mis paginas -->
 
         @yield('content')
-    
+    <x-flash-message code="0" message="Mensaje"/>
     </div>
 
     <footer class="text-white py-1 fixed-bottom bg-success">
