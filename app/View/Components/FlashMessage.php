@@ -9,6 +9,7 @@ class FlashMessage extends Component
     public $code;
     public $type;
     public $message;
+    public $timeout;
   
 
     /**
@@ -16,7 +17,7 @@ class FlashMessage extends Component
      *
      * @return void
      */
-    public function __construct($code, $message)
+    public function __construct($code = 0, $message = '')
     {
         //
         $this->code = $code;
@@ -24,12 +25,15 @@ class FlashMessage extends Component
 
         if ($code <= 200) {
             $this->type = "success";
+            $this->timeout = 3000;
         } 
         else if ($code < 400) {
             $this->type = "warning";
+            $this->timeout = 10000;
         }
         else {
             $this->type = "danger";
+            $this->timeout = 0;
         }
         
     }

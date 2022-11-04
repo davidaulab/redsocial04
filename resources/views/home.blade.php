@@ -12,7 +12,17 @@
 
 <h1 class="text-center my-4">Muro</h1>
 <p>A veces la comunicación no es fluida porque hay muros, pero el nuestro sirve para todo lo contrario.</p>
-<a href="{{ route ('wall')}}"><img src ="{{asset ('/img/wall.png')}}" class="img-fluid"></a>
+<a href="{{ route ('wall')}}"><img src ="{{asset ('/img/wall.png')}}" class="img-fluid" id="imgmuro" aria-describedby="tooltip"></a>
 
+
+    <div id="tooltip" role="tooltip">
+      Pincha aquí para acceder al muro
+      <div id="arrow" data-popper-arrow></div>
+    </div>
+
+
+<script>
+   
+    </script>
 
 @endsection   

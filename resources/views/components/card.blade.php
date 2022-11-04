@@ -1,5 +1,5 @@
 <div class="col-md-4 d-flex align-items-stretch text-center">
-    <div class="card p-2 m-1 ">
+    <div class="card p-2 m-1 w-100">
         @isset($img)
         <img src="{{ $img }}" class="card-img-top" alt="{{ $title }}">
         @endisset

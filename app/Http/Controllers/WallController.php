@@ -45,9 +45,9 @@ class WallController extends Controller
         ];
         return $posts;
     }
-    
+
     public function index (){
-        return view ('wall', ['posts' => $this->getPosts()]);
+        return view ('wall', ['posts' => $this->getPosts(), 'code' => 200, 'message' => 'Listado de posts' ]);
     }
 
     public function show ($id) {
