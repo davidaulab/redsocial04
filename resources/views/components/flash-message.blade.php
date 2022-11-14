@@ -2,6 +2,9 @@
     'code',
     'message'
 ])
+
+
+
 @if ($code > 0)
 <div id="flashMessage" class="bg-white text-{{$type}} border border-{{ $type }} p-2 flash">
     {{ $code}}  - {{ $message}}

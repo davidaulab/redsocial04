@@ -3,68 +3,83 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+
+use App\Http\Requests\WallRequest;
+use App\Models\Post;
 
 class WallController extends Controller
 {
-    //
-  /*  private $posts = [
-        ['id' => 2,
-        'title' => 'Primer post',
-        'content' => 'Contenido del primer post que hago con un array asociativo'],
-        ['id' => 5,
-        'title' => 'Segundo post',
-        'content' => 'Middleware group. Now create something great!'],
-        ['id' => 8,
-        'title' => 'Tercer post',
-        'content' => 'contains the "web" middleware group Middleware group. Now create something great!'],
-        ['id' => 10,
-        'title' => 'Cuarto post',
-        'content' => 'Here is where you can register we Middleware group. Now create something great!'],
-        ['id' => 17,
-        'title' => 'Quinto post',
-        'content' => 'Here is where you can register we Middleware group.que hago con un array asociativo'],
-    ]; */
+    
 
-    private function getPosts () {
-        $posts = [
-            ['id' => 2,
-            'title' => 'Primer post',
-            'content' => 'Contenido del primer post que hago con un array asociativo'],
-            ['id' => 5,
-            'title' => 'Segundo post',
-            'content' => 'Middleware group. Now create something great!'],
-            ['id' => 8,
-            'title' => 'Tercer post',
-            'content' => 'contains the "web" middleware group Middleware group. Now create something great!'],
-            ['id' => 10,
-            'title' => 'Cuarto post',
-            'content' => 'Here is where you can register we Middleware group. Now create something great!'],
-            ['id' => 17,
-            'title' => 'Quinto post',
-            'content' => 'Here is where you can register we Middleware group.que hago con un array asociativo'],
-        ];
-        return $posts;
-    }
 
-    public function index (){
-        return view ('wall', ['posts' => $this->getPosts(), 'code' => 200, 'message' => 'Listado de posts' ]);
-    }
-
-    public function show ($id) {
-        $posts = $this->getPosts();
+    public function index (Request $request){
         
-        // dd ($posts);
-    
-        $postDetalle = null;
-    
-        foreach ($posts as $post) {
-            if ($post['id'] == $id) {
-                // lo he encontrado en el array
-                $postDetalle = $post;
-            }
+        $code = $request->code;
+        $message = $request->message; 
+       /* $posts = DB::table('post')->get(); */
+        $posts = Post::orderByDesc('id')->get();
+
+        return view ('wall', compact('posts', 'code', 'message'));
+ }
+
+    public function show (Post $post) {
+        /* $post = DB::table('post')->find($id); */
+        return view ('post', compact ('post'));    
+    }
+
+    public function create () {
+        return view ('editpost');
+    }
+    public function store (WallRequest $request) {
+        //dd($request);
+        $url ='';
+        if ($request->hasFile('img')) {
+            $img = $request->file('img')->store ('public/posts');
+            $url = Storage::url($img);
         }
-        
-        return view ('post', ['post' => $postDetalle]);    
+ 
+/*
+        DB::table('post')->insert ([
+            'title' => $request->title,
+            'content' => $request->content,
+            'img' => $url
+        ]);
+        */
+       /* $post = Post::create ([
+            'title' => $request->title,
+            'content' => $request->content,
+            'img' => $url
+        ]); 
+        $post->saveOrFail (); */
+        $post = Post::create ($request->validated());
+        $post->img = $url;
+        $post->saveOrFail ();
+        return redirect()->route ('wall',['code' => '200', 'message' => 'Post creado correctamente']);
+
     }
 
+    public function edit (Post $post) { // igual que el show
+        /* $post = DB::table('post')->find($id); */
+
+        
+        return view ('updatepost', compact ('post'));  
+        //return view ('updatepost',  ['post' => $post]);  
+          
+    }
+    public function update (WallRequest $request, Post $post) { // igual que el store
+        //dd($request);
+        $url ='';
+        if ($request->hasFile('img')) {
+            $img = $request->file('img')->store ('public/posts');
+            $url = Storage::url($img);
+        }
+ 
+        $post->fill ($request->validated());
+        $post->img = $url;
+        $post->saveOrFail ();
+        return redirect()->route ('wall',['code' => '200', 'message' => 'Post creado correctamente']);
+
+    }
 }

@@ -9,12 +9,13 @@
 
     <div class="d-flex justify-content-center">
 
-        <x-card title="{{ $post['title'] }}" content="{{ $post['content'] }}" />
-
+        <x-card title="{{ $post->title }}" content="{{ $post->content }}" img="{{ $post->img}}"  />
+           
     </div>
 
     <div class="d-flex justify-content-center ">
-    <a href="{{ route ('wall') }}" class="btn btn-success m-4">Volver</a>
+        <div><a href="{{ route('editpost', ['post' => $post]) }}" class="btn btn-light m-4">Modificar</a></div>
+        <div><a href="{{ route ('wall') }}" class="btn btn-success m-4">Volver</a></div>
     </div>
 </div>
 
