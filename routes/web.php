@@ -29,12 +29,19 @@ Route::get('/home', function () {
 
 Route::get ('/wall', [WallController::class, 'index'])->name('wall');
 
-Route::get('/createpost', [WallController::class, 'create'])->name ('newpost');
-Route::post('/savepost', [WallController::class, 'store'])->name ('savepost');
+Route::group(['middleware' => 'auth'], function () {
 
+    Route::get('/createpost', [WallController::class, 'create'])->name ('newpost');
+    Route::post('/savepost', [WallController::class, 'store'])->name ('savepost');
+    
+    
+    Route::get('/editpost/{post}', [WallController::class, 'edit'])->name ('editpost');
+    Route::post('/updatepost/{post}', [WallController::class, 'update'])->name ('updatepost');
 
-Route::get('/editpost/{post}', [WallController::class, 'edit'])->name ('editpost');
-Route::post('/updatepost/{post}', [WallController::class, 'update'])->name ('updatepost');
+    Route::post('/deletepost/{post}', [WallController::class, 'destroy'])->name ('deletepost');
+    
+});
+
 
 
 
@@ -53,3 +60,6 @@ Route::get ('/about', function () {
     return view ('about');
 })->name ('about');
 
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

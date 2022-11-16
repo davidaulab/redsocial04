@@ -82,4 +82,9 @@ class WallController extends Controller
         return redirect()->route ('wall',['code' => '200', 'message' => 'Post creado correctamente']);
 
     }
+    public function destroy ( Post $post) { // igual que el update
+      
+        $post->deleteOrFail();
+        return redirect()->route ('wall',['code' => '200', 'message' => 'Post borrado correctamente']);
+    }
 }

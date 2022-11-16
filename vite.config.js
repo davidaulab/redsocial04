@@ -6,17 +6,9 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/sass/app.scss',
-                
                 'resources/js/app.js',
-                'resources/css/app.css',
-                'resources/js/redsocial.js',
             ],
             refresh: true,
         }),
     ],
-    resolve: {
-        alias: {
-            '@': '/resources'
-        }
-    }
 });

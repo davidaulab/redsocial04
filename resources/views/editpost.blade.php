@@ -41,7 +41,12 @@
 
     <div class="d-flex justify-content-center ">
         <div>
-            <button type="submit" class="btn btn-success">Guardar</button>
+
+        @auth()
+        <button type="submit" class="btn btn-success">Guardar</button>
+        @else
+         <div class="d-flex justify-content-center mt-4">Sólo los usuarios registrados pueden crear posts</div>
+        @endauth
         </div>
         <div>
             <a href="{{ route ('wall') }}" class="btn btn-success ms-4">Volver</a>
