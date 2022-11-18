@@ -85,3 +85,5 @@ body {
     left: -4px;
   }
   
+
+ .page-item-active { background-color: #198754 !important;}

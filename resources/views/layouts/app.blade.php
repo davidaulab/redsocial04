@@ -26,7 +26,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route ('wall') }}">Muro</a>
+                        <a class="nav-link" href="{{ route ('posts.index') }}">Muro</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route ('groups.index') }}">Grupos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route ('people') }}">Personas</a>

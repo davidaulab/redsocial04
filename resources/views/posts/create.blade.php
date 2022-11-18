@@ -7,7 +7,7 @@
 
 <div class="container">
 
-    <form method="post" action="{{ route ('savepost')}}" enctype="multipart/form-data">
+    <form method="post" action="{{ route ('posts.store')}}" enctype="multipart/form-data">
         @csrf
 
     <div class="d-flex justify-content-center">
@@ -49,7 +49,7 @@
         @endauth
         </div>
         <div>
-            <a href="{{ route ('wall') }}" class="btn btn-success ms-4">Volver</a>
+            <a href="{{ route ('posts.index') }}" class="btn btn-success ms-4">Volver</a>
         </div>
     </div>
 

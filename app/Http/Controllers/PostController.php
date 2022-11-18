@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-use App\Http\Requests\WallRequest;
+use App\Http\Requests\PostRequest;
 use App\Models\Post;
 
-class WallController extends Controller
+class PostController extends Controller
 {
     
 
@@ -19,20 +19,20 @@ class WallController extends Controller
         $code = $request->code;
         $message = $request->message; 
        /* $posts = DB::table('post')->get(); */
-        $posts = Post::orderByDesc('id')->get();
+        $posts = Post::orderByDesc('created_at')->paginate (3);
 
-        return view ('wall', compact('posts', 'code', 'message'));
+        return view ('posts.index', compact('posts', 'code', 'message'));
  }
 
     public function show (Post $post) {
         /* $post = DB::table('post')->find($id); */
-        return view ('post', compact ('post'));    
+        return view ('posts.show', compact ('post'));    
     }
 
     public function create () {
-        return view ('editpost');
+        return view ('posts.create');
     }
-    public function store (WallRequest $request) {
+    public function store (PostRequest $request) {
         //dd($request);
         $url ='';
         if ($request->hasFile('img')) {
@@ -56,7 +56,7 @@ class WallController extends Controller
         $post = Post::create ($request->validated());
         $post->img = $url;
         $post->saveOrFail ();
-        return redirect()->route ('wall',['code' => '200', 'message' => 'Post creado correctamente']);
+        return redirect()->route ('posts.index',['code' => '200', 'message' => 'Post creado correctamente']);
 
     }
 
@@ -64,11 +64,11 @@ class WallController extends Controller
         /* $post = DB::table('post')->find($id); */
 
         
-        return view ('updatepost', compact ('post'));  
+        return view ('posts.edit', compact ('post'));  
         //return view ('updatepost',  ['post' => $post]);  
           
     }
-    public function update (WallRequest $request, Post $post) { // igual que el store
+    public function update (PostRequest $request, Post $post) { // igual que el store
         //dd($request);
         $url ='';
         if ($request->hasFile('img')) {
@@ -79,12 +79,12 @@ class WallController extends Controller
         $post->fill ($request->validated());
         $post->img = $url;
         $post->saveOrFail ();
-        return redirect()->route ('wall',['code' => '200', 'message' => 'Post creado correctamente']);
+        return redirect()->route ('posts.index',['code' => '200', 'message' => 'Post creado correctamente']);
 
     }
     public function destroy ( Post $post) { // igual que el update
       
         $post->deleteOrFail();
-        return redirect()->route ('wall',['code' => '200', 'message' => 'Post borrado correctamente']);
+        return redirect()->route ('posts.index',['code' => '200', 'message' => 'Post borrado correctamente']);
     }
 }

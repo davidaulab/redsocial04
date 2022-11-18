@@ -7,7 +7,8 @@
 
 <div class="container">
 
-    <form method="post" action="{{ route ('updatepost', ['post' => $post])}}" enctype="multipart/form-data">
+    <form method="post" action="{{ route ('posts.update', ['post' => $post])}}" enctype="multipart/form-data">
+        @method('PUT')
         @csrf
 
         <div class="d-flex justify-content-center">
@@ -52,7 +53,7 @@
                 <button type="submit" class="btn btn-success">Guardar</button>
             </div>
             <div>
-                <a href="{{ route ('wall') }}" class="btn btn-success ms-4">Volver</a>
+                <a href="{{ route ('posts.index') }}" class="btn btn-success ms-4">Volver</a>
             </div>
         </div>
 

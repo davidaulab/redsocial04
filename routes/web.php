@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\WallController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\GroupController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,25 +28,29 @@ Route::get('/home', function () {
 
 
 
-Route::get ('/wall', [WallController::class, 'index'])->name('wall');
+Route::get ('/posts', [PostController::class, 'index'])->name('posts.index');
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('/createpost', [WallController::class, 'create'])->name ('newpost');
-    Route::post('/savepost', [WallController::class, 'store'])->name ('savepost');
+    Route::get('/post/create', [PostController::class, 'create'])->name ('posts.create');
+    Route::post('/post', [PostController::class, 'store'])->name ('posts.store');
     
     
-    Route::get('/editpost/{post}', [WallController::class, 'edit'])->name ('editpost');
-    Route::post('/updatepost/{post}', [WallController::class, 'update'])->name ('updatepost');
+    Route::get('/post/{post}/edit', [PostController::class, 'edit'])->name ('posts.edit');
+    Route::put('/post/{post}', [PostController::class, 'update'])->name ('posts.update');
 
-    Route::post('/deletepost/{post}', [WallController::class, 'destroy'])->name ('deletepost');
+    Route::delete('/post/{post}', [PostController::class, 'destroy'])->name ('posts.destroy');
     
 });
 
 
+Route::get ('/post/{post}', [PostController::class, 'show'])->name ('posts.show'); 
+//Route::resource('/posts', PostController::class)->parameters('posts');
+
+// Conjunto de las rutas del recurso de Group
+Route::resource('/groups', GroupController::class)->parameters('groups');
 
 
-Route::get ('/post/{post}', [WallController::class, 'show'])->name ('post');
 
 
 Route::get('/people', function () {
