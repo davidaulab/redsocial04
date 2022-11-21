@@ -3,6 +3,7 @@
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\PersonController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,6 +43,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/post/{post}', [PostController::class, 'destroy'])->name ('posts.destroy');
     
 });
+// /grupo/bootstrap
+Route::get ('/grupo/{name}', [GroupController::class, 'showByName']); 
 
 
 Route::get ('/post/{post}', [PostController::class, 'show'])->name ('posts.show'); 
@@ -50,12 +53,24 @@ Route::get ('/post/{post}', [PostController::class, 'show'])->name ('posts.show'
 // Conjunto de las rutas del recurso de Group
 Route::resource('/groups', GroupController::class)->parameters('groups');
 
+// Rutas de personas / People
+Route::get('/people', [PersonController::class, 'index'])->name('people.index');
+Route::get('/person/{person}', [PersonController::class, 'show'])->name('people.show');
+
+Route::get('/persons/create', [PersonController::class, 'create'])->name ('peoples.create'); // modificados los prefijos por conflicto
+Route::post('/person', [PersonController::class, 'store'])->name ('people.store');
+
+Route::get('/person/{person}/edit', [PersonController::class, 'edit'])->name('people.edit');
+Route::put('/person/{person}', [PersonController::class, 'update'])->name ('people.update');
 
 
+Route::delete('/person/{person}', [PersonController::class, 'destroy'])->name ('people.destroy');
+ 
 
+/*
 Route::get('/people', function () {
     return view ('people',['name' => 'David', 'name2' => 'David']);
-})->name ('people');
+})->name ('people'); */
 
 Route::get ('/contact', [ContactController::class, 'create'])->name ('contact');
 

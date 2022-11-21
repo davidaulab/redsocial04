@@ -32,7 +32,7 @@
                         <a class="nav-link" href="{{ route ('groups.index') }}">Grupos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route ('people') }}">Personas</a>
+                        <a class="nav-link" href="{{ route ('people.index') }}">Personas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route ('contact') }}">Contacto</a>
