@@ -11,4 +11,8 @@ class Group extends Model
 
     //protected $guarded = ['id'];
     protected $fillable = ['title', 'description'];
+
+    public function posts () {
+        return $this->hasMany(Post::class);
+    }
 }

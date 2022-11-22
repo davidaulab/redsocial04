@@ -8,29 +8,42 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
+use App\Models\User;
+use App\Models\Group;
 
 class PostController extends Controller
 {
     
-
+    public int $byPage = 9;
 
     public function index (Request $request){
         
         $code = $request->code;
         $message = $request->message; 
        /* $posts = DB::table('post')->get(); */
-        $posts = Post::orderByDesc('created_at')->paginate (3);
+        $posts = Post::orderByDesc('created_at')->paginate ($this->byPage);
 
         return view ('posts.index', compact('posts', 'code', 'message'));
  }
 
+    public function filterByUser (User $user, Request $request) {
+        $code = $request->code;
+        $message = $request->message; 
+        $posts = Post::whereBelongsTo ($user)->paginate ($this->byPage);
+        return view ('posts.index', compact('posts', 'code', 'message'));
+    }
+
     public function show (Post $post) {
         /* $post = DB::table('post')->find($id); */
+
+        //dd ($post);
         return view ('posts.show', compact ('post'));    
     }
 
+    
     public function create () {
-        return view ('posts.create');
+        $groups = Group::orderby('title')->get();
+        return view ('posts.create', compact ('groups'));
     }
     public function store (PostRequest $request) {
         //dd($request);
@@ -40,21 +53,11 @@ class PostController extends Controller
             $url = Storage::url($img);
         }
  
-/*
-        DB::table('post')->insert ([
-            'title' => $request->title,
-            'content' => $request->content,
-            'img' => $url
-        ]);
-        */
-       /* $post = Post::create ([
-            'title' => $request->title,
-            'content' => $request->content,
-            'img' => $url
-        ]); 
-        $post->saveOrFail (); */
         $post = Post::create ($request->validated());
         $post->img = $url;
+        
+        //dd($post);
+        
         $post->saveOrFail ();
         return redirect()->route ('posts.index',['code' => '200', 'message' => 'Post creado correctamente']);
 

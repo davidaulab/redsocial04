@@ -47,7 +47,9 @@
                
             </div>
         </div>
-
+        @auth()
+       <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">     
+       @endauth
         <div class="d-flex justify-content-center ">
             <div>
                 <button type="submit" class="btn btn-success">Guardar</button>

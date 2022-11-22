@@ -11,10 +11,19 @@
         <div class="card-body">
             <h5 class="card-title">{{ $title }}</h5>
             <p class="card-text">{{ $content }}</p>
+            @isset($author)
+            <p class="card-text">Creado por {{ $author }}</p>    
+            @endisset
+
+            @isset($group)
+            <p class="card-text">Publicado en  {{ $group }}</p>    
+            @endisset
+            
+
         </div>
 
-        @isset($link)
-        <a href="{{ $link }}" class="btn btn-success m-4">Ver detalle</a>
+        @isset($link) 
+        <a href="{{ $link }}" class="btn btn-success m-4"> {{ ((isset($linkTxt))? $linkTxt : "Ver detalle" )  }}</a>
 
         @endisset
 

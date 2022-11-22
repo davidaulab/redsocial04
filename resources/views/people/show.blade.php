@@ -9,7 +9,7 @@
 
     <div class="d-flex justify-content-center">
 
-        <x-card title="{{ $person->name }}" content="{{ $person->email }}"   />
+        <x-card title="{{ $person->name }}" content="{{ $person->email }}"  link="{{ route ('posts.filterByUser', $person )}}" linkTxt="Ver posts" />
            
     </div>
     <div class="d-flex justify-content-center ">

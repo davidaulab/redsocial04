@@ -7,11 +7,7 @@
 
 <div class="container">
 
-    <div class="d-flex justify-content-center">
-
-        <x-card title="{{ $group->title }}" content="{{ $group->description }}"   />
-           
-    </div>
+ 
     <div class="d-flex justify-content-center ">
         <script>
             function confirmarEnvio () {
@@ -27,6 +23,19 @@
         <div><a href="{{ route('groups.edit', ['group' => $group]) }}" class="btn btn-light m-4">Modificar</a></div>
         <div><a href="{{ route ('groups.index') }}" class="btn btn-success m-4">Volver</a></div>
     </div>
+
+    <div class="d-flex justify-content-center">
+
+        <x-card title="{{ $group->title }}" content="{{ $group->description }}"   />
+           
+    </div>
+    <div class="d-flex justify-content-center row mt-4">
+        @foreach ($group->posts as $post)
+            <div class="w-100 bg-white border border-success"><a href="{{ route ('posts.show', $post) }}" class="text-success">{{ $post->title}}</a></div>
+        @endforeach
+
+    </div>
+
 </div>
 
 @endsection

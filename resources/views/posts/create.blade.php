@@ -19,6 +19,15 @@
                 <input type="text" class="form-control" name="title" id="title" placeholder="Título del post" value="{{ old ('title')}}">
             </div>
             <div class="mb-3">
+                <label for="group_id" class="form-label">Grupo en el que se publicará</label>
+                <select class="form-control" name="group_id" id="group_id" placeholder="Grupo del post" value="{{ old ('group_id')}}">
+                    @foreach ($groups as $group)
+                    <option value="{{ $group->id}}"> {{ $group->title }} </option>
+                    @endforeach
+                </select>
+            </div>
+            
+            <div class="mb-3">
                 <label for="content" class="form-label">Cuerpo del mensaje</label>
                 <textarea class="form-control" name="content" id="conten" rows="3">{{ old ('content') }}</textarea>
             </div>
@@ -37,8 +46,11 @@
             </div>
 
         </div>
+        @auth()
+       <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">     
+       @endauth
+      
     </div>
-
     <div class="d-flex justify-content-center ">
         <div>
 

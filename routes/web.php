@@ -43,15 +43,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/post/{post}', [PostController::class, 'destroy'])->name ('posts.destroy');
     
 });
-// /grupo/bootstrap
-Route::get ('/grupo/{name}', [GroupController::class, 'showByName']); 
-
 
 Route::get ('/post/{post}', [PostController::class, 'show'])->name ('posts.show'); 
+
+Route::get ('/posts/{user}', [PostController::class, 'filterByUser'])->name ('posts.filterByUser');
+
+
+
 //Route::resource('/posts', PostController::class)->parameters('posts');
 
 // Conjunto de las rutas del recurso de Group
 Route::resource('/groups', GroupController::class)->parameters('groups');
+// /grupo/bootstrap
+Route::get ('/grupo/{name}', [GroupController::class, 'showByName']); 
+
 
 // Rutas de personas / People
 Route::get('/people', [PersonController::class, 'index'])->name('people.index');
